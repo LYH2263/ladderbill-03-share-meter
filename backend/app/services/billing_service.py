@@ -38,6 +38,14 @@ class BillingService:
     def readings_for_account(self, account_id: int):
         return readings_repo.for_account(self._conn, account_id)
 
+    def search_readings(self, account_id=None, period=None, include_superseded=True):
+        return readings_repo.search(
+            self._conn,
+            account_id=account_id,
+            period=period,
+            include_superseded=include_superseded,
+        )
+
     def settings_map(self):
         return settings_repo.get_map(self._conn)
 
@@ -74,7 +82,8 @@ class BillingService:
 
     def dashboard_stats(self):
         accounts = accounts_repo.list_all(self._conn)
-        readings = readings_repo.list_all(self._conn)
+        # 抄表计数只统计生效记录；合表重算软标记作废的旧抄表不计入
+        readings = readings_repo.list_all(self._conn, include_superseded=False)
         clean = [a for a in accounts if "种子" not in a.get("name", "")]
         dirty = [a for a in accounts if "种子" in a.get("name", "")]
         return {

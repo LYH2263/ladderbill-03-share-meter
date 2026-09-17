@@ -1,3 +1,3 @@
-from app.repositories import accounts, readings, runs, settings, tiers
+from app.repositories import accounts, readings, runs, settings, share, tiers
 
-__all__ = ["accounts", "readings", "runs", "settings", "tiers"]
+__all__ = ["accounts", "readings", "runs", "settings", "share", "tiers"]
