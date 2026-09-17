@@ -1,0 +1,10 @@
+import sqlite3
+
+
+def list_all(conn: sqlite3.Connection) -> list[dict]:
+    return [dict(r) for r in conn.execute("SELECT * FROM readings ORDER BY id").fetchall()]
+
+
+def for_account(conn: sqlite3.Connection, account_id: int) -> list[dict]:
+    q = "SELECT * FROM readings WHERE account_id=? ORDER BY id"
+    return [dict(r) for r in conn.execute(q, (account_id,)).fetchall()]
