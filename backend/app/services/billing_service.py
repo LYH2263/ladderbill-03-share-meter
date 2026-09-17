@@ -38,6 +38,17 @@ class BillingService:
     def readings_for_account(self, account_id: int):
         return readings_repo.for_account(self._conn, account_id)
 
+    def create_reading(self, account_id: int, kwh: float, peak: bool, period: str | None):
+        if not accounts_repo.get(self._conn, account_id):
+            return None
+        reading_id = readings_repo.insert(
+            self._conn, account_id, kwh, int(peak), period or None
+        )
+        row = self._conn.execute(
+            "SELECT * FROM readings WHERE id=?", (reading_id,)
+        ).fetchone()
+        return dict(row)
+
     def settings_map(self):
         return settings_repo.get_map(self._conn)
 

@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 
+from app.modules import share_meter
 from app.routers import accounts, billing, dashboard, history, readings, settings, tiers
 
 api = APIRouter(prefix="/api")
@@ -10,3 +11,4 @@ api.include_router(readings.router)
 api.include_router(billing.router)
 api.include_router(history.router)
 api.include_router(settings.router)
+api.include_router(share_meter.router)

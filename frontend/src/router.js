@@ -7,6 +7,7 @@ import TierRules from './pages/TierRules.vue'
 import PeakCompare from './pages/PeakCompare.vue'
 import RunHistory from './pages/RunHistory.vue'
 import Settings from './pages/Settings.vue'
+import ShareMeter from './pages/ShareMeter.vue'
 
 export default createRouter({
   history: createWebHistory(),
@@ -17,6 +18,7 @@ export default createRouter({
     { path: '/workbench', component: Workbench },
     { path: '/tiers', component: TierRules },
     { path: '/compare', component: PeakCompare },
+    { path: '/share', component: ShareMeter },
     { path: '/history', component: RunHistory },
     { path: '/settings', component: Settings },
   ],

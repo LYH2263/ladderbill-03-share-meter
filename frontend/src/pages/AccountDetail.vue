@@ -27,5 +27,30 @@ const account = computed(() => data.value?.account)
       <p v-if="bill">合计 <strong class="hero-num" style="font-size:1.5rem">¥{{ bill.total }}</strong></p>
       <SegmentTable :rows="bill?.segments || []" />
     </div>
+    <div class="panel">
+      <h3>抄表记录</h3>
+      <table>
+        <thead><tr><th>#</th><th>账期</th><th>电量(kWh)</th><th>尖峰</th><th>来源</th><th>状态</th></tr></thead>
+        <tbody>
+          <tr v-for="r in data.readings" :key="r.id">
+            <td>{{ r.id }}</td>
+            <td>{{ r.period || '—' }}</td>
+            <td>{{ r.kwh }}</td>
+            <td>{{ r.peak ? '是' : '否' }}</td>
+            <td>
+              <span v-if="r.source === 'share'" class="tag-share">分摊#{{ r.share_run_id }}</span>
+              <span v-else class="muted">手动</span>
+            </td>
+            <td>
+              <span v-if="r.superseded" class="muted">已作废</span>
+              <span v-else>有效</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
+<style scoped>
+.tag-share { color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, transparent); border-radius: 6px; padding: 0.1rem 0.45rem; }
+</style>
